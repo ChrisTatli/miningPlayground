@@ -21,33 +21,6 @@ public class SelfishMiner extends CompliantMiner implements Miner {
 		return publicHead;
 	}
 
-
-	public void _blockMined(Block block, boolean isMinerMe){
-		if(isMinerMe){
-			int diffPrev = privateHead.getHeight() - block.getHeight();
-			this.privateHead = block;
-			privateBranchLen++;
-			if(diffPrev == 0 && privateBranchLen == 2 ){
-				this.publicHead = this.privateHead;
-				this.privateBranchLen = 0;
-			}
-		} else {
-			int diffPrev = privateHead.getHeight() - block.getHeight();
-			this.publicHead = block;
-			if (diffPrev == 0){
-				this.privateHead = block;
-				this.privateBranchLen = 0; 
-			} else if (diffPrev == 1){
-				this.publicHead = this.privateHead;
-			} else if (diffPrev == 2){
-				this.publicHead = this.privateHead;
-				this.privateBranchLen = 0;
-			} else {
-				this.publicHead = this.privateHead;
-			}
-		}
-	}
-
 	@Override 
 	public void blockMined(Block block, boolean isMinerMe){
 		if(mineSelfish){
